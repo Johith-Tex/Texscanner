@@ -1,0 +1,12 @@
+[build]
+builder = "nixpacks"
+
+[deploy]
+startCommand = "python model/train.py && gunicorn api.app:app --workers 2 --bind 0.0.0.0:$PORT"
+healthcheckPath = "/health"
+healthcheckTimeout = 60
+restartPolicyType = "on-failure"
+restartPolicyMaxRetries = 3
+
+[[services]]
+name = "texscanner-api"
